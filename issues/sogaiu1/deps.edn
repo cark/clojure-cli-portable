@@ -1,0 +1,21 @@
+{
+ :paths ["src"]
+
+ :deps {
+        org.clojure/clojure {:mvn/version "1.10.1"}
+        }
+
+ :aliases {
+           :deps {:extra-deps {org.clojure/tools.deps.alpha {:mvn/version "0.7.527"}}}
+           :test {:extra-paths ["test"]}
+           :sock
+           {
+            :jvm-opts ["-Dclojure.server.repl={:port,11119,:accept,clojure.core.server/repl}"]
+            :main-opts ["-e" "(println,\"socket-repl-at-port:11119\")"]
+            }
+           }
+
+ :mvn/repos {
+             "central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org/"}
+             }} 
