@@ -1,0 +1,50 @@
+#!/bin/bash
+function check {
+    if [ $? -ne 0 ]
+    then
+	echo $1
+	echo STOP ON ERROR !!!
+	popd > /dev/null
+	exit 1
+    fi    
+}
+
+script_dir=$(dirname $(readlink -f $0))
+pushd . > /dev/null
+
+cd $script_dir/..
+version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
+output_dir="out/clojure-cli"
+
+# compile
+script/compile $version
+check 'COMPILE ERROR'
+
+#download
+echo Downloading official linux install...
+link=https://download.clojure.org/install/clojure-tools-$version.tar.gz
+wget -O clojure-tools.tar.gz $link
+check 'DOWNLOAD ERROR'
+
+#unzip
+echo Unpack...
+tar xzf clojure-tools.tar.gz
+check 'UNPACK ERROR'
+
+#package
+echo Packaging...
+rm -r out
+mkdir -p $output_dir/libexec
+cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
+cp clojure-tools/*.edn $output_dir
+cp clojure-tools/clj $output_dir
+mv clojure $output_dir
+
+#zip
+echo Zipping...
+cd out
+zip -r clojure-cli-linux-$version.zip *
+check 'ZIP ERROR'
+
+popd > /dev/null
+exit 0
