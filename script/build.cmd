@@ -16,6 +16,7 @@ popd
 exit /B 1
 
 :download
+if /I "%1"=="nodownload" goto package
 echo Downloading ClojureTools...
 rd /S /Q ClojureTools
 set link=https://download.clojure.org/install/clojure-tools-%version%.zip

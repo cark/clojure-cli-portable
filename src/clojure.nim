@@ -63,11 +63,11 @@ func safeSeqAccess(s : seq[string], index : int) : string =
         ""
 
 var i = 0
-while i < (len args) :
+while i < len(args) :
     let arg = args[i]
     case arg
         of "-h", "--help", "-?" :
-            if (main_aliases.len()>0 or all_aliases.len()>0) :
+            if len(main_aliases) > 0 or len(all_aliases) > 0 :
                 extra_args = args[i..^1]
                 break
             else : 
@@ -108,7 +108,7 @@ if java_command == "":
     var gotJava = false
     if existsEnv("JAVA_HOME")  :
         java_command = findExe(getEnv("JAVA_HOME") / "bin" / "java", true)
-        gotJava = (java_command != "")  
+        gotJava = java_command != ""  
     if not gotJava :
          echo "Couldn't find 'java'. Please set JAVA_HOME."  
          quit(1)
@@ -187,7 +187,7 @@ for config_path in config_paths :
     else :
         cache_key = cache_key & "NIL"
 
-# *** opting for md5 here, any hashing will do anyways
+# *** opting for md5 here, any uniform distribution hashing will do anyways
 let 
     cache_key_hash = getMD5(cache_key)[0..7] # pick only 8 hex digits
     base_file = &"{cache_dir}/{cache_key_hash}"
