@@ -45,6 +45,7 @@ cd out
 
 REM zip
 REM we'll just assume a clojure dev has java installed
+echo Compressing
 jar -cfM clojure-cli-win-%version%.zip .\
 call :check ZIP ERROR
 
