@@ -122,15 +122,18 @@ if contains(flags, help) :
 # whole process group. Java will receive it, so it can safely be ignored.
 # The child process will exit first, tools won't be surprised, and 
 # we produce no extra output.
-proc ignoreIt() : void {.noconv.} =
-    discard
-setControlCHook(ignoreIt)
+# proc ignoreIt() : void {.noconv.} =
+#     discard
+# setControlCHook(ignoreIt)
 
 proc launch(command : string, args : openArray[string]) : int =
-     var process = startProcess(command, "", args, nil, {poParentStreams, poInteractive})
-     var exitCode = waitForExit(process)
-     close(process)
-     exitCode
+    var process = startProcess(command, "", args, nil, {poParentStreams, poInteractive})
+    var exitCode = 0
+    try:
+        exitCode = waitForExit(process)     
+    finally:
+        close(process)
+        return exitCode
 
 # Execute resolve-tags command
 if contains(flags, resolve_tags) :
