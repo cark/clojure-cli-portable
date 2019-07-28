@@ -30,7 +30,6 @@ script\build
 ```
 You'll find the resulting zip file in the `out` directory.
 #### Installing
-No affordance were made to ease the installation process, but it's quite simple.
 - Uninstall any previously installed Clojure command line tool
 - Unzip anywhere you like
 - Add to the path
@@ -51,7 +50,6 @@ script/build
 You'll find the resulting zip file in the `out` directory.
 There are two scripts `script/build`and `script/compile`. You might have to set executable permission on these.
 #### Installing 
-No affordances were made to ease the installation process. 
 - Unpack anywhere you like
 - symlink from one of your bin directories
 - Set executable permissions where needed
