@@ -63,7 +63,6 @@ A few minor changes were made to the original scripts
 - the cache\_key includes the project\_version in order to refresh the cache on clojure/tool.deps version change
 - cache file names are md5 based instead of crc based
 - we're purposefully ignoring ctrl-c, and let the JVM handle it.
-- the cache file content of jvm\_file and main\_file are parsed again as a regular command line parameters string.
 
 ## Prior art
 I'm not the first one : a [go implementation](https://github.com/frericksm/clj-windows) also exists.
