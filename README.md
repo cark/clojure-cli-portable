@@ -16,7 +16,7 @@ I purposefully tried to maintain the shape of the existing bash script (almost l
 - small
 - source code is quite readable
 ## Binaries 
-Windows binaries binaries are provided here.
+Windows binaries binaries are provided in [the releases page](https://github.com/cark/clojure-cli-portable/releases).
 ## Build from source
 ### Windows
 #### Requirements
