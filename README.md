@@ -5,9 +5,10 @@ The new Clojure CLI is great, but we're having issues on Windows as described [h
 
 I first made an [exploratory wrapper](https://github.com/cark/clojure-win-cli-wrap) to the existing [Powershell implementation](https://github.com/clojure/tools.deps.alpha/wiki/clj-on-Windows), and it works well enough, but we're still paying a hefty startup time penalty by calling into Powershell. So this project was born, a reimplementation of the powershell/bash scripts as small binary executable, writen with [Nim](https://nim-lang.org/).
 ## Project goal
-We're exploring the possibilities and hope to have Cognitect adopt this or something like it. The project was made portable with the idea that this migh ease the maintenance effort. Nim was chosen because it's easy to read, produces small executables, and is portable. 
-
-I purposefully tried to maintain the shape of the existing bash script (almost line for line), and kept the same variable names so that this would be easy to transition to.
+- We're exploring the possibilities and hope to have Cognitect adopt this or something like it. 
+- The project was made portable to demonstrate the feasability of a single implementation for all platforms.
+- Nim was chosen because it's easy to read, produces small executables, and is portable. 
+- I purposefully tried to maintain the shape of the existing bash script (almost line for line), and kept the same variable names so that this would be easy to transition to.
 ## Benefits
 - command line parity between windows and the official posix cli
 - tools like Cider jack-in on deps.edn, and shadow-cljs with deps.edn work on Windows
@@ -17,6 +18,7 @@ I purposefully tried to maintain the shape of the existing bash script (almost l
 - source code is quite readable
 ## Binaries 
 Windows binaries are provided in [the releases page](https://github.com/cark/clojure-cli-portable/releases).
+Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
 ## Build from source
 ### Windows
 #### Requirements
