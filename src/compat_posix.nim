@@ -1,5 +1,4 @@
 import os
-import osproc
 
 proc getArgs*() : seq[string] =
     result = @[]

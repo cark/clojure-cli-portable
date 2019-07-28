@@ -1,34 +1,40 @@
-@echo off
+@ECHO OFF
+SETLOCAL
+
+REM for error handling
+IF NOT "%selfWrapped%"=="%~0" (
+  SET selfWrapped=%~0
+  %ComSpec% /s /c ""%~0" %*"
+  GOTO :EOF
+)
+
+REM setup
 set thisdir=%~d0%~p0
 pushd "%thisdir%"
 cd ..
-REM we're now in project root
 set /p version=<version.txt
 set output-dir=out\clojure-cli
+
+REM Compile
 call script\compile version
-if ERRORLEVEL 1 (
-  echo COMPILE ERROR
-  goto error) else goto download
+call :check COMPILE ERROR
 
-:error
-echo STOP ON ERROR !!!
-popd
-exit /B 1
-
-:download
-if /I "%1"=="nodownload" goto package
+REM download
+if /I "%1"=="nodownload" goto extract
 echo Downloading ClojureTools...
 rd /S /Q ClojureTools
 set link=https://download.clojure.org/install/clojure-tools-%version%.zip
 powershell -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%link%'" -OutFile clojure-tools.zip
+call :check DOWNLOAD ERROR
+
+REM extract
+:extract
 echo Extracting files...
 jar -xf clojure-tools.zip
-if ERRORLEVEL 1 (
-  echo UNZIP ERROR
-  goto error) else goto package
+call :check EXTRACTION ERROR
 
-:package
-ECHO Packaging...
+REM package
+echo Packaging...
 rd /S /Q out
 md %output-dir%\libexec
 copy ClojureTools\*.jar %output-dir%\libexec
@@ -36,11 +42,21 @@ copy ClojureTools\*.edn %output-dir%
 copy script\clj.cmd %output-dir%
 move /y clojure.exe %output-dir%
 cd out
+
+REM zip
 REM we'll just assume a clojure dev has java installed
 jar -cfM clojure-cli-win-%version%.zip .\
-if ERRORLEVEL 1 (
-  echo ZIP ERROR
-  goto error)
+call :check ZIP ERROR
 
 :the-end
 popd
+exit /B
+
+:check
+if errorlevel 1 goto :error
+exit /b
+
+:error
+echo !!! %* !!!
+popd
+exit 1
