@@ -10,13 +10,13 @@ We're exploring the possibilities and hope to have Cognitect adopt this or somet
 I purposefully tried to maintain the shape of the existing bash script (almost line for line), and kept the same variable names so that this would be easy to transition to.
 ## Benefits
 - command line parity between windows and the official posix cli
-- tools like cider jack-in deps.edn and shadow-cljs with deps.edn work on Windows
+- tools like Cider jack-in on deps.edn, and shadow-cljs with deps.edn work on Windows
 - no need to lower the security of your Powershell by setting a permissive execution policy
 - fast
 - small
 - source code is quite readable
 ## Binaries 
-Windows binaries binaries are provided in [the releases page](https://github.com/cark/clojure-cli-portable/releases).
+Windows binaries are provided in [the releases page](https://github.com/cark/clojure-cli-portable/releases).
 ## Build from source
 ### Windows
 #### Requirements
@@ -38,7 +38,7 @@ I'll soon make a proper Windows installer.
 ### Linux
 !!! The official command line is good enough on Linux !!!
 
-While it works on my machine, at present time, the Linux part of this project is more of a "this can be done" thing
+While the Linux build works on my machine, it only serves to demonstrate the feasability of a single implementation for all platforms.
 #### Requirements
 - a Linux computer or VM
 - a recent [Nim compiler](https://nim-lang.org/install_unix.html)
@@ -53,11 +53,13 @@ There are two scripts `script/build`and `script/compile`. You might have to set 
 - Unpack anywhere you like
 - symlink from one of your bin directories
 - Set executable permissions where needed
-
+### Mac
+While I haven't tested this at all, I think this can be built on Mac too, with maybe some slight adjustments in
+the build scripts... Once again, the official scripts are good enough there.
 ## Changes
 A few minor changes were made to the original scripts
-- cache file names are md5 based instead of crc based
 - the cache\_key includes the project\_version in order to refresh the cache on clojure/tool.deps version change
+- cache file names are md5 based instead of crc based
 - we're purposefully ignoring ctrl-c, and let the JVM handle it.
 - the cache file content of jvm\_file and main\_file are parsed again as a regular command line parameters string.
 
