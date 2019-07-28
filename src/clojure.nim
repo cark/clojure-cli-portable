@@ -281,8 +281,12 @@ elif contains(flags, tree) :
         "clojure.tools.deps.alpha.script.print-tree", "--libs-file", libs_file]).quit()
 else:
     if existsFile(jvm_file) :
-        jvm_cache_opts = paramsToSeq(readFile(jvm_file))
+        # echo "jvmopts:", readFile(jvm_file)
+        # echo "toseq", paramsToSeq(readFile(jvm_file))
+        jvm_cache_opts = readFile(jvm_file).split(" ")
     if existsFile(main_file) :
-        main_cache_opts = paramsToSeq(readFile(main_file))
+        # echo "mainopts:", readFile(main_file)
+        # echo "toseq", paramsToSeq(readFile(main_file))
+        main_cache_opts = readFile(main_file).split(" ")
     launch(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
         "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args).quit()
