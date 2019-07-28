@@ -17,8 +17,8 @@ I first made an [exploratory wrapper](https://github.com/cark/clojure-win-cli-wr
 - small
 - source code is quite readable
 ## Binaries 
-Windows binaries are provided in [the releases page](https://github.com/cark/clojure-cli-portable/releases).
-Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
+- Windows binaries are provided in the [Releases page](https://github.com/cark/clojure-cli-portable/releases).
+- Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
 ## Build from source
 ### Windows
 #### Requirements
