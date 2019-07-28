@@ -21,30 +21,23 @@ script/compile $version
 check 'COMPILE ERROR'
 
 #download
-echo Downloading clojure brew-install...
-link=https://github.com/clojure/brew-install/archive/$version.zip
-wget -O brew-install.zip $link
+echo Downloading official libux install...
+link=https://download.clojure.org/install/clojure-tools-$version.tar.gz
+wget -O clojure-tools.tar.gz $link
 check 'DOWNLOAD ERROR'
 
 #unzip
-echo Unzip...
-unzip -o brew-install.zip
-check 'UNZIP ERROR'
-
-#build tools.deps
-echo Build tools.deps
-cp brew-install-$version/pom.xml .
-rm -r target
-mvn -B clean package -Dmaven.test.skip=true
-check 'TOOLS.DEPS BUILD ERROR'
+echo Unpack...
+tar xzf clojure-tools.tar.gz
+check 'UNPACK ERROR'
 
 #package
 echo Packaging...
 rm -r out
 mkdir -p $output_dir/libexec
-cp target/clojure-tools-$version.jar $output_dir/libexec
-cp brew-install-$version/src/main/resources/*.edn $output_dir
-cp brew-install-$version/src/main/resources/clj $output_dir
+cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
+cp clojure-tools/*.edn $output_dir
+cp clojure-tools/clj $output_dir
 mv clojure $output_dir
 
 #zip

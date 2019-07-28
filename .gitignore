@@ -7,6 +7,8 @@ ClojureTools/
 info/
 target/
 brew-install*/
+clojure-tools/
+clojure-tools*.*
 *.*~
 *~
 *.exe
