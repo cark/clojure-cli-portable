@@ -1,0 +1,58 @@
+#!/bin/bash
+function check {
+    if [ $? -ne 0 ]
+    then
+	echo $1
+	echo STOP ON ERROR !!!
+	popd > /dev/null
+	exit 1
+    fi    
+}
+
+script_dir=$(dirname $(readlink -f $0))
+pushd . > /dev/null
+
+cd $script_dir/..
+version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
+output_dir="out/clojure-cli"
+
+# compile
+script/compile $version
+check 'COMPILE ERROR'
+
+#download
+echo Downloading clojure brew-install...
+link=https://github.com/clojure/brew-install/archive/$version.zip
+wget -O brew-install.zip $link
+check 'DOWNLOAD ERROR'
+
+#unzip
+echo Unzip...
+unzip -o brew-install.zip
+check 'UNZIP ERROR'
+
+#build tools.deps
+echo Build tools.deps
+cp brew-install-$version/pom.xml .
+rm -r target
+mvn -B clean package -Dmaven.test.skip=true
+check 'TOOLS.DEPS BUILD ERROR'
+
+#package
+echo Packaging...
+rm -r out
+mkdir -p $output_dir/libexec
+cp target/clojure-tools-$version.jar $output_dir/libexec
+cp brew-install-$version/src/main/resources/*.edn $output_dir
+cp brew-install-$version/src/main/resources/clj $output_dir
+mv clojure $output_dir
+
+#zip
+echo Zipping...
+cd out
+zip -r clojure-cli-linux-$version.zip *
+check 'ZIP ERROR'
+
+popd > /dev/null
+exit 0
+

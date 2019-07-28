@@ -5,7 +5,10 @@ out/
 ClojureTools/
 *.zip
 info/
+target/
+brew-install*/
 *.*~
+*~
 *.exe
 c.bat
-
+*pom.xml

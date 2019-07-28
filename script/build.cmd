@@ -24,7 +24,7 @@ powershell -command "[Net.ServicePointManager]::SecurityProtocol = [Net.Security
 echo Extracting files...
 jar -xf clojure-tools.zip
 if ERRORLEVEL 1 (
-  echo DOWNLOAD ERROR
+  echo UNZIP ERROR
   goto error) else goto package
 
 :package
