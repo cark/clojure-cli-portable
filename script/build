@@ -21,7 +21,7 @@ script/compile $version
 check 'COMPILE ERROR'
 
 #download
-echo Downloading official libux install...
+echo Downloading official linux install...
 link=https://download.clojure.org/install/clojure-tools-$version.tar.gz
 wget -O clojure-tools.tar.gz $link
 check 'DOWNLOAD ERROR'
@@ -48,4 +48,3 @@ check 'ZIP ERROR'
 
 popd > /dev/null
 exit 0
-
