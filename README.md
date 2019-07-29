@@ -60,7 +60,7 @@ While I haven't tested this at all, I think this can be built on Mac too, with m
 the build scripts... Once again, the official scripts are good enough there.
 ## Changes
 A few minor changes were made to the original scripts
-- the cache\_key includes the project\_version in order to refresh the cache on clojure/tool.deps version change
+- the cache\_key includes the project\_version in order to refresh the cache on clojure cli version change
 - cache file names are md5 based instead of crc based
 - we're purposefully ignoring ctrl-c, and let the JVM handle it.
 
