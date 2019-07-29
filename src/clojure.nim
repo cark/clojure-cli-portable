@@ -10,7 +10,6 @@ import strformat
 import sequtils
 import md5
 import times
-import parseArgs
 
 const project_version {.strdefine.} : string = "0.0.0.0"
 
@@ -134,6 +133,10 @@ proc launch(command : string, args : openArray[string]) : int =
     finally:
         close(process)
         return exitCode
+
+proc fireAndForget(command : string, args : openArray[string]) : void =
+    when defined(windows) : launch(command, args).quit()
+    elif defined(posix) : exec(command, args)
 
 # Execute resolve-tags command
 if contains(flags, resolve_tags) :
@@ -291,5 +294,8 @@ else:
         # echo "mainopts:", readFile(main_file)
         # echo "toseq", paramsToSeq(readFile(main_file))
         main_cache_opts = readFile(main_file).split(" ")
-    launch(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
-        "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args).quit()
+        fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
+            "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args)
+       
+        # launch(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
+        # "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args).quit()

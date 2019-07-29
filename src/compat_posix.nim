@@ -1,4 +1,5 @@
 import os
+import posix
 
 proc getArgs*() : seq[string] =
     result = @[]
@@ -17,3 +18,8 @@ proc portableUserCacheDir*(config_dir : string) : string =
         getEnv("XDG_CACHE_HOME") / "clojure"
     else :
         config_dir / ".cpcache"
+
+proc exec*(command : string, args : openArray[string]) : void =
+    var c : cstring = command
+    var a : cstringArray = allocCStringArray(args)
+    discard execv(c, a)
