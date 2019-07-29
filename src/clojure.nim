@@ -121,9 +121,9 @@ if contains(flags, help) :
 # whole process group. Java will receive it, so it can safely be ignored.
 # The child process will exit first, tools won't be surprised, and 
 # we produce no extra output.
-# proc ignoreIt() : void {.noconv.} =
-#     discard
-# setControlCHook(ignoreIt)
+proc ignoreIt() : void {.noconv.} =
+    discard
+setControlCHook(ignoreIt)
 
 proc launch(command : string, args : openArray[string]) : int =
     var process = startProcess(command, "", args, nil, {poParentStreams, poInteractive})
@@ -259,9 +259,9 @@ else: cp = readFile(cp_file)
 
 # The actual business here
 if contains(flags, pom) :
-    launch(java_command, @["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
+    fireAndForget(java_command, @["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
         "clojure.tools.deps.alpha.script.generate-manifest", "--config-files", config_str, 
-        "--gen=pom"] & tool_args).quit()
+        "--gen=pom"] & tool_args)
 elif contains(flags, print_classpath) : 
     echo cp
 elif contains(flags, describe) :
@@ -283,19 +283,12 @@ elif contains(flags, describe) :
     echo " :main-aliases " & quoted(join(main_aliases, ""))
     echo " :all-aliases " & quoted(join(classpath_aliases, "")) & "}" 
 elif contains(flags, tree) :
-    launch(java_command, ["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
-        "clojure.tools.deps.alpha.script.print-tree", "--libs-file", libs_file]).quit()
+    fireAndForget(java_command, ["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
+        "clojure.tools.deps.alpha.script.print-tree", "--libs-file", libs_file])
 else:
     if existsFile(jvm_file) :
-        # echo "jvmopts:", readFile(jvm_file)
-        # echo "toseq", paramsToSeq(readFile(jvm_file))
         jvm_cache_opts = readFile(jvm_file).split(" ")
     if existsFile(main_file) :
-        # echo "mainopts:", readFile(main_file)
-        # echo "toseq", paramsToSeq(readFile(main_file))
         main_cache_opts = readFile(main_file).split(" ")
         fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
             "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args)
-       
-        # launch(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
-        # "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args).quit()
