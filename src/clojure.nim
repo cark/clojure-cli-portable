@@ -240,7 +240,7 @@ if stale or contains(flags, pom) :
         add(tool_args, "-A" & join(all_aliases, ""))
     if force_cp != "" :
         add(tool_args, "--skip-cp")
-    
+
 # if stale, run make-classpath to refresh cached classpath
 if stale and not contains(flags, describe) :
     if contains(flags, verbose) :
@@ -292,9 +292,9 @@ else:
         jvm_cache_opts = readFile(jvm_file).split(" ")
     if existsFile(main_file) :
         main_cache_opts = readFile(main_file).split(" ")
-        if contains(flags, verbose) :
-            echo "Launching ", java_command, " with param vector = " ,jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
-                "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args
-            echo ""
-        fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
-            "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args)
+    if contains(flags, verbose) :
+        echo "Launching ", java_command, " with param vector = " ,jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
+            "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args
+        echo ""
+    fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
+        "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args)
