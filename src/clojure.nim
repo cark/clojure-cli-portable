@@ -248,6 +248,8 @@ if stale and not contains(flags, describe) :
     let exitCode = launch(java_command, @["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
         "clojure.tools.deps.alpha.script.make-classpath", "--config-files", config_str, "--libs-file", 
         libs_file, "--cp-file", cp_file, "--jvm-file", jvm_file, "--main-file", main_file] & tool_args)
+    if contains(flags, verbose) :
+        echo "returned from classpath with exit code ", exitCode
     if exitCode != 0 : quit(exitCode)
 
 # Build classpath
@@ -290,5 +292,9 @@ else:
         jvm_cache_opts = readFile(jvm_file).split(" ")
     if existsFile(main_file) :
         main_cache_opts = readFile(main_file).split(" ")
-        fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=libs_file",
+        if contains(flags, verbose) :
+            echo "Launching ", java_command, " with param vector = " ,jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
+                "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args
+            echo ""
+        fireAndForget(java_command, jvm_cache_opts & jvm_opts & @["-Dclojure.libfile=" & libs_file,
             "-classpath", cp, "clojure.main"] & main_cache_opts & extra_args)
