@@ -2,49 +2,85 @@
 function check {
     if [ $? -ne 0 ]
     then
-	echo $1
-	echo STOP ON ERROR !!!
+	echo -e "\e[91m!!!!!!!!!!!!! ERROR : $1 !!!!!!!!!!!!!\e[0m"
 	popd > /dev/null
 	exit 1
     fi    
 }
 
+function p {
+    echo -e \e[93$* \e[0m
+}
+		   
 script_dir=$(dirname $(readlink -f $0))
 pushd . > /dev/null
 
 cd $script_dir/..
 version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
-output_dir="out/clojure-cli"
 
+#clean output dir
+rm -r out
+
+# we do the linux part first
 # compile
+echo Linux build
+output_dir="out/clojure-cli-linux"
 script/compile $version
 check 'COMPILE ERROR'
 
-#download
+# download
 echo Downloading official linux install...
 link=https://download.clojure.org/install/clojure-tools-$version.tar.gz
 wget -O clojure-tools.tar.gz $link
 check 'DOWNLOAD ERROR'
 
-#unzip
+# unzip
 echo Unpack...
 tar xzf clojure-tools.tar.gz
 check 'UNPACK ERROR'
 
-#package
+# package
 echo Packaging...
-rm -r out
+
 mkdir -p $output_dir/libexec
 cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
 cp clojure-tools/*.edn $output_dir
 cp clojure-tools/clj $output_dir
 mv clojure $output_dir
-
-#zip
+   
+# zip
 echo Zipping...
+mv $output_dir out/clojure-cli/
 cd out
-zip -r clojure-cli-linux-$version.zip *
+zip -r clojure-cli-linux-$version.zip clojure-cli/*
 check 'ZIP ERROR'
+cd ..
+mv out/clojure-cli/ $output_dir
+
+## now we do the windows part
+echo Windows build
+output_dir="out/clojure-cli-windows"
+
+# compile
+script/win_cross_compile $version
+check 'COMPILE ERROR'
+
+# package
+echo Packaging...
+mkdir -p $output_dir/libexec
+cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
+cp clojure-tools/*.edn $output_dir
+cp script/clj.cmd $output_dir
+mv clojure.exe $output_dir
+
+# zip
+echo Zipping...
+mv $output_dir out/clojure-cli/
+cd out
+zip -r clojure-cli-win-$version.zip clojure-cli/*
+check 'ZIP ERROR'
+cd ..
+mv out/clojure-cli/ $output_dir
 
 popd > /dev/null
 exit 0

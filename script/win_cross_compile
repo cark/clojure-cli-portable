@@ -1,0 +1,3 @@
+#!/bin/bash
+version=$1
+nim -d:release --opt:size c -d:mingw -d:project_version="$version" --passL:-s -o:clojure.exe src/clojure
