@@ -44,13 +44,15 @@ While the Linux build works on my machine, it only serves to demonstrate the fea
 #### Requirements
 - a Linux computer or VM
 - a recent [Nim compiler](https://nim-lang.org/install_unix.html)
+- mingw-w64 required for cross compilation to windows
+
 #### Building
 from the project directory, execute this command in the terminal :
 ```
 script/build
 ```
-You'll find the resulting zip file in the `out` directory.
-There are two scripts `script/build`and `script/compile`. You might have to set executable permission on these.
+You'll find the resulting zip files in the `out` directory.
+There are 3 scripts `script/build`, `script/compile`, and `script/win_cross_compile`. You might have to set executable permission on these.
 #### Installing 
 - Unpack anywhere you like
 - symlink from one of your bin directories
