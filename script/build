@@ -9,7 +9,7 @@ function check {
 }
 
 function p {
-    echo -e \e[93$* \e[0m
+    echo -e "\e[93m**** $@ \e[0m"
 }
 		   
 script_dir=$(dirname $(readlink -f $0))
@@ -23,24 +23,24 @@ rm -r out
 
 # we do the linux part first
 # compile
-echo Linux build
+p Linux build
 output_dir="out/clojure-cli-linux"
 script/compile $version
 check 'COMPILE ERROR'
 
 # download
-echo Downloading official linux install...
+p Downloading official linux install...
 link=https://download.clojure.org/install/clojure-tools-$version.tar.gz
 wget -O clojure-tools.tar.gz $link
 check 'DOWNLOAD ERROR'
 
 # unzip
-echo Unpack...
+p Unpack...
 tar xzf clojure-tools.tar.gz
 check 'UNPACK ERROR'
 
 # package
-echo Packaging...
+p Packaging...
 
 mkdir -p $output_dir/libexec
 cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
@@ -49,7 +49,7 @@ cp clojure-tools/clj $output_dir
 mv clojure $output_dir
    
 # zip
-echo Zipping...
+p Zipping...
 mv $output_dir out/clojure-cli/
 cd out
 zip -r clojure-cli-linux-$version.zip clojure-cli/*
@@ -58,7 +58,7 @@ cd ..
 mv out/clojure-cli/ $output_dir
 
 ## now we do the windows part
-echo Windows build
+p Windows build
 output_dir="out/clojure-cli-windows"
 
 # compile
@@ -66,7 +66,7 @@ script/win_cross_compile $version
 check 'COMPILE ERROR'
 
 # package
-echo Packaging...
+p Packaging...
 mkdir -p $output_dir/libexec
 cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
 cp clojure-tools/*.edn $output_dir
@@ -74,7 +74,7 @@ cp script/clj.cmd $output_dir
 mv clojure.exe $output_dir
 
 # zip
-echo Zipping...
+p Zipping...
 mv $output_dir out/clojure-cli/
 cd out
 zip -r clojure-cli-win-$version.zip clojure-cli/*
