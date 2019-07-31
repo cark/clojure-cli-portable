@@ -1,0 +1,27 @@
+#!/bin/bash
+function check {
+    if [ $? -ne 0 ]
+    then
+	echo -e "\e[91m!!!!!!!!!!!!! ERROR : $1 !!!!!!!!!!!!!\e[0m"
+	popd > /dev/null
+	exit 1
+    fi    
+}
+
+function p {
+    echo -e "\e[93m**** $@ \e[0m"
+}
+		   
+script_dir=$(dirname $(readlink -f $0))
+pushd . > /dev/null
+
+p Building everything
+script/download
+check 'DOWNLOAD'
+script/build
+check 'LINUX BUILD'
+script/build_win
+check 'WINDOWS BUILD'
+
+popd > /dev/null
+exit 0

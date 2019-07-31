@@ -67,6 +67,10 @@ script/build_win
 ```
 You'll find the resulting zip file in the `out/win` directory.
 
+All these steps may be done in a single call :
+```
+script/build_all
+```
 #### Installing 
 - Unpack anywhere you like
 - symlink from one of your bin directories
@@ -81,7 +85,9 @@ A few minor changes were made to the original scripts
 - we're purposefully ignoring ctrl-c, and let the JVM handle it.
 
 ## Prior art
-I'm not the first one : a [go implementation](https://github.com/frericksm/clj-windows) also exists.
+I'm not the first one : 
+- a [go implementation](https://github.com/frericksm/clj-windows)
+- a [node implementation](https://github.com/thheller/clojure-cli)
 # Copyright and License
 
 Copyright © 2017 Rich Hickey, Alex Miller, Sacha De Vos and contributors
