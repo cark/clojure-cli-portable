@@ -18,28 +18,26 @@ pushd . > /dev/null
 cd $script_dir/..
 version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
 
-p Linux build
 #clean output dir
-rm -r out/linux
+p Windows build
+rm -r out/win
+output_dir="out/win/clojure-cli"
 # compile
-output_dir="out/linux/clojure-cli"
-script/compile $version
+script/compile_win $version
 check 'COMPILE ERROR'
-
 # package
 p Packaging...
 mkdir -p $output_dir/libexec
 cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
 cp clojure-tools/*.edn $output_dir
-cp clojure-tools/clj $output_dir
-mv clojure $output_dir
-   
+cp script/clj.cmd $output_dir
+mv clojure.exe $output_dir
+
 # zip
 p Zipping...
-cd out/linux
-zip -r clojure-cli-linux-$version.zip clojure-cli/*
+cd out/win
+zip -r clojure-cli-win-$version.zip *
 check 'ZIP ERROR'
-cd ..
 
 popd > /dev/null
 exit 0

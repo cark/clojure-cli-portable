@@ -47,12 +47,26 @@ While the Linux build works on my machine, it only serves to demonstrate the fea
 - mingw-w64 required for cross compilation to windows
 
 #### Building
-from the project directory, execute this command in the terminal :
+First we need the official clojure-tools.
+From the project directory, execute this command in the terminal :
+```
+script/download
+```
+
+Then we want to build the Linux version
+From the project directory, execute this command in the terminal :
 ```
 script/build
 ```
-You'll find the resulting zip files in the `out` directory.
-There are 3 scripts `script/build`, `script/compile`, and `script/win_cross_compile`. You might have to set executable permission on these.
+You'll find the resulting zip file in the `out/linux` directory.
+
+Finally we might want to build the windows version
+From the project directory, execute this command in the terminal :
+```
+script/build_win
+```
+You'll find the resulting zip file in the `out/win` directory.
+
 #### Installing 
 - Unpack anywhere you like
 - symlink from one of your bin directories
