@@ -1,0 +1,3 @@
+in this project: https://github.com/sogaiu/adorn -- invoking clj -A:native-image leads to problems on windows
+
+https://gist.github.com/sogaiu/e079cd770051685c46ab24b6658effcf

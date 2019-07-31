@@ -16,6 +16,8 @@ I first made an [exploratory wrapper](https://github.com/cark/clojure-win-cli-wr
 - fast
 - small
 - source code is quite readable
+- cross-compilation from linux and/or docker to linux and windows
+- a pretty installer for windows
 ## Binaries 
 - Windows binaries are provided in the [Releases page](https://github.com/cark/clojure-cli-portable/releases).
 - Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
@@ -81,6 +83,24 @@ All these steps may be done in a single call :
 ```
 script/build_all
 ```
+### Docker
+We can build it all with the provided Dockerfile. This will :
+- use the official docker ubuntu image
+- apt get all the things required to compile for Linux and Windows
+- cross compile binaries for both platforms 
+- build the Windows installer
+
+The first run will be pretty long as we need to setup the image.
+The image will end up at a almost 4gb.
+Following runs are pretty fast.
+#### Requirements
+- Docker up and running
+#### Building
+from the project directory, execute this command in the terminal :
+```
+script/docker_build
+```
+The result will be placed in `dockerout/`
 #### Installing 
 - Unpack anywhere you like
 - symlink from one of your bin directories

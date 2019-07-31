@@ -1,0 +1,33 @@
+#!/bin/bash
+function check {
+    if [ $? -ne 0 ]
+    then
+	echo -e "\e[91m!!!!!!!!!!!!! ERROR : $1 !!!!!!!!!!!!!\e[0m"
+	popd > /dev/null
+	exit 1
+    fi    
+}
+
+function p {
+    echo -e "\e[93m**** $@ \e[0m"
+}
+		   
+script_dir=$(dirname $(readlink -f $0))
+pushd . > /dev/null
+
+cd $script_dir/..
+
+# chmod a+rwx -R out/
+# rm -rf out/
+mkdir dockerout/
+
+p Building the docker image
+docker build --tag=clojureclibuild .
+check 'Error building docker image'
+
+p Building our project
+docker run --rm -v $script_dir/../dockerout:/clojure-cli-portable/out/:z clojureclibuild script/build_all 
+check 'Error building our project'
+
+popd > /dev/null
+exit 0
