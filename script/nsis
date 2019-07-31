@@ -1,0 +1,33 @@
+#!/bin/bash
+function check {
+    if [ $? -ne 0 ]
+    then
+	echo -e "\e[91m!!!!!!!!!!!!! ERROR : $1 !!!!!!!!!!!!!\e[0m"
+	popd > /dev/null
+	exit 1
+    fi    
+}
+
+function p {
+    echo -e "\e[93m**** $@ \e[0m"
+}
+		   
+script_dir=$(dirname $(readlink -f $0))
+pushd . > /dev/null
+
+cd $script_dir/..
+version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
+
+cd win_installer
+p 'Copy Windows build here'
+cp -r ../out/win/clojure-cli .
+rm -r out
+mkdir out
+p 'Compiling windows installer'
+makensis -DPRODUCT_VERSION=$version -INPUTCHARSET UTF8 installer.nsi 
+check 'WIN INSTALLER COMPILATION'
+p 'Copy the installer to Windows build'
+cp out/* ../out/win/
+
+popd > /dev/null
+exit 0

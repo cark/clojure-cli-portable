@@ -8,6 +8,8 @@ info/
 target/
 brew-install*/
 clojure-tools/
+**/clojure-tools/
+**/clojure-cli/
 clojure-tools*.*
 *.*~
 *~

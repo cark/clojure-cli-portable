@@ -20,6 +20,8 @@ I first made an [exploratory wrapper](https://github.com/cark/clojure-win-cli-wr
 - Windows binaries are provided in the [Releases page](https://github.com/cark/clojure-cli-portable/releases).
 - Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
 ## Build from source
+### All platforms
+- the `version.txt` file must contain the current version string of the clojure tools
 ### Windows
 #### Requirements
 - a Windows computer or VM
@@ -44,7 +46,8 @@ While the Linux build works on my machine, it only serves to demonstrate the fea
 #### Requirements
 - a Linux computer or VM
 - a recent [Nim compiler](https://nim-lang.org/install_unix.html)
-- mingw-w64 required for cross compilation to windows
+- (optional) mingw-w64 required for cross compilation to windows
+- (optional) [NSIS](https://nsis.sourceforge.io/Main_Page) for cross-compilation of the windows installer
 
 #### Building
 First we need the official clojure-tools.
@@ -60,12 +63,19 @@ script/build
 ```
 You'll find the resulting zip file in the `out/linux` directory.
 
-Finally we might want to build the windows version
+We might want to build the windows version
 From the project directory, execute this command in the terminal :
 ```
 script/build_win
 ```
 You'll find the resulting zip file in the `out/win` directory.
+
+The windows installer
+From the project directory, execute this command in the terminal :
+```
+script/nsis
+```
+You'll find the resulting installer executable in the `out/win` directory.
 
 All these steps may be done in a single call :
 ```
