@@ -14,6 +14,7 @@ function p {
 		   
 script_dir=$(dirname $(readlink -f $0))
 pushd . > /dev/null
+cd $script_dir/..
 
 p Building everything
 script/download
