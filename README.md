@@ -19,8 +19,8 @@ I first made an [exploratory wrapper](https://github.com/cark/clojure-win-cli-wr
 - cross-compilation from linux and/or docker to linux and windows
 - a pretty installer for windows
 ## Binaries 
-- Windows binaries are provided in the [Releases page](https://github.com/cark/clojure-cli-portable/releases).
-- Follow the [Windows installation procedure](https://github.com/cark/clojure-cli-portable#installing)
+- Windows binaries are provided in the [Releases page](https://github.com/cark/clojure-cli-portable/releases)
+- An installer is also provided there
 ## Build from source
 ### All platforms
 - the `version.txt` file must contain the current version string of the clojure tools
@@ -39,8 +39,6 @@ You'll find the resulting zip file in the `out` directory.
 - Uninstall any previously installed Clojure command line tool
 - Unzip anywhere you like
 - Add to the path
-
-I'll soon make a proper Windows installer.
 ### Linux
 !!! The official command line is good enough on Linux !!!
 
