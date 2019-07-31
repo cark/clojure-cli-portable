@@ -70,7 +70,7 @@ script/build_win
 ```
 You'll find the resulting zip file in the `out/win` directory.
 
-The windows installer
+The windows installer. This step requires that the windows build be executed first.
 From the project directory, execute this command in the terminal :
 ```
 script/nsis
