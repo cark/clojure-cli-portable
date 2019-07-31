@@ -83,6 +83,10 @@ All these steps may be done in a single call :
 ```
 script/build_all
 ```
+#### Installing 
+- Unpack anywhere you like
+- symlink from one of your bin directories
+- Set executable permissions where needed
 ### Docker
 We can build it all with the provided Dockerfile. This will :
 - use the official docker ubuntu image
@@ -101,10 +105,6 @@ from the project directory, execute this command in the terminal :
 script/docker_build
 ```
 The result will be placed in `dockerout/`
-#### Installing 
-- Unpack anywhere you like
-- symlink from one of your bin directories
-- Set executable permissions where needed
 ### Mac
 While I haven't tested this at all, I think this can be built on Mac too, with maybe some slight adjustments in
 the build scripts... Once again, the official scripts are good enough there.
