@@ -22,6 +22,8 @@ script/build
 check 'LINUX BUILD'
 script/build_win
 check 'WINDOWS BUILD'
+script/nsis
+check 'WINDOWS INSTALLER BUILD'
 
 popd > /dev/null
 exit 0
