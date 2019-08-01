@@ -6,7 +6,10 @@ import times
 import os
 
 proc buildManifest(cpString : string) : string = 
-    var paths = split(cpString, ";")
+    when defined(windows):
+        var paths = split(cpString, ";")
+    when defined(posix):
+        var paths = split(cpString, ":")
     var newPaths = newSeq[string]()
     for path in paths:
         var p : string
