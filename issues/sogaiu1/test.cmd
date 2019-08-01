@@ -1,1 +1,1 @@
-clojure -A:sock -r
+clojure -Scp-jar -A:sock -r

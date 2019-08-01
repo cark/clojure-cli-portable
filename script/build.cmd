@@ -13,7 +13,7 @@ set thisdir=%~d0%~p0
 pushd "%thisdir%"
 cd ..
 set /p version=<version.txt
-set output-dir=out\clojure-cli
+set output-dir=out\win\clojure-cli
 
 REM Compile
 call script\compile version
@@ -41,7 +41,7 @@ copy ClojureTools\*.jar %output-dir%\libexec
 copy ClojureTools\*.edn %output-dir%
 copy script\clj.cmd %output-dir%
 move /y clojure.exe %output-dir%
-cd out
+cd out\win
 
 REM zip
 REM we'll just assume a clojure dev has java installed

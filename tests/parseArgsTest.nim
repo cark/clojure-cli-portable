@@ -1,4 +1,4 @@
-import "../parseArgs", unittest
+import parseArgs, unittest
 
 suite "getParams" :
     test "just the exe" :

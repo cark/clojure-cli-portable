@@ -111,6 +111,7 @@ A few minor changes were made to the original scripts
 - the cache\_key includes the project\_version in order to refresh the cache on clojure cli version change
 - cache file names are md5 based instead of crc based
 - we're purposefully ignoring ctrl-c, and let the JVM handle it.
+- added an experimental fix to [TDEP-120](https://clojure.atlassian.net/browse/TDEPS-120), as well as a new switch -Scp-jar that will force the creation and usage of a classpath jar
 
 ## Prior art
 I'm not the first one : 

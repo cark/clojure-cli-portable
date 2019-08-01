@@ -10,13 +10,13 @@ import strformat
 import sequtils
 import md5
 import times
+import classpathjar
 
 const project_version {.strdefine.} : string = "0.0.0.0"
 
 let 
     install_dir = getAppDir()
     tools_cp = install_dir / "libexec" / "clojure-tools-" & project_version & ".jar"
-
 var 
     config_dir = ""
     user_cache_dir = ""
@@ -34,7 +34,7 @@ var args : seq[string] = getArgs()
 type 
     Flag = enum
         print_classpath, describe, verbose, force, repro,
-        tree, pom, resolve_tags, help
+        tree, pom, resolve_tags, help, cp_jar
     FlagSet = set[Flag]
 
 var 
@@ -85,6 +85,7 @@ while i < len(args) :
         of "-Stree" : incl(flags, tree)
         of "-Spom" : incl(flags, pom)
         of "-Sresolve-tags" : incl(flags, resolve_tags)
+        of "-Scp-jar" : incl(flags, cp_jar)
         else :
             case arg[0..1] :
                 of "-J" : add(jvm_opts, arg[2..^1])
@@ -257,7 +258,8 @@ if contains(flags, describe) :
     cp = ""
 elif force_cp != "" : 
     cp = force_cp
-else: cp = readFile(cp_file)
+else:
+    cp = fileToCp(cp_file, contains(flags, cp_jar))
 
 # The actual business here
 if contains(flags, pom) :

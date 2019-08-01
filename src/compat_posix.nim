@@ -23,3 +23,6 @@ proc exec*(command : string, args : openArray[string]) : void =
     var c : cstring = command
     var a : cstringArray = allocCStringArray(args)
     discard execv(c, a)
+
+proc portableFileToCp*(filename : string) : string =
+    readFile(filename)

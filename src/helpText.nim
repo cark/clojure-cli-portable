@@ -27,6 +27,7 @@ Usage: clojure [dep-opt*] [init-opt*] [main-opt] [arg*]
         -Sresolve-tags Resolve git coordinate tags to shas and update deps.edn
         -Sverbose      Print important path info to console
         -Sdescribe     Print environment and command parsing info as data
+        -Scp-jar       Generate a classpath jar, use it to start the JVM
 
     init-opt:
         -i, --init path     Load a file or resource

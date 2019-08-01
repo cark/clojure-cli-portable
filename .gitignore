@@ -14,5 +14,5 @@ clojure-tools*.*
 *.*~
 *~
 *.exe
-c.bat
+b.cmd
 *pom.xml
