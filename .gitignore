@@ -16,3 +16,4 @@ clojure-tools*.*
 *.exe
 b.cmd
 *pom.xml
+zlib*.*

@@ -1,3 +1,5 @@
+{.passl: "-lz".}
+{.passl: "-static".}
 import zip/zipfiles
 import strutils
 import times

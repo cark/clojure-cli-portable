@@ -1,4 +1,3 @@
-{.passl: "-lz".}
 import winlean
 import os
 import parseArgs

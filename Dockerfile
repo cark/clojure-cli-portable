@@ -10,7 +10,7 @@ ENV PATH=$PATH:/root/.nimble/bin
 
 # the base
 RUN apt update && \
-	apt -y install build-essential curl git perl mingw-w64 libzip-dev wget zip unzip && \
+	apt -y install build-essential curl git perl mingw-w64 libzip-dev libz-dev wget zip unzip && \
 	rm -rf /var/cache/apt/
 
 # nim
@@ -36,5 +36,7 @@ RUN chmod +x /nsis/nsis-3.04/bin/makensis && \
 # our project
 ADD . /clojure-cli-portable
 WORKDIR /clojure-cli-portable
+RUN nimble install zip -y
+
 # RUN rm -rf out && mkdir out && mkdir /out
 # VOLUME /out
