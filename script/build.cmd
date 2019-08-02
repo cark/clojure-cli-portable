@@ -15,9 +15,17 @@ cd ..
 set /p version=<version.txt
 set output-dir=out\win\clojure-cli
 
+REM nimble install zip
+nimble install zip -y
+call :check NIMBLE ERROR ERROR
+
 REM Compile
 call script\compile version
 call :check COMPILE ERROR
+
+REM upx compression
+upx clojure.exe
+call :check UPX ERROR
 
 REM download
 if /I "%1"=="nodownload" goto extract
