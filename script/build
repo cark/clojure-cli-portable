@@ -37,6 +37,7 @@ mkdir -p $output_dir/libexec
 cp clojure-tools/clojure-tools-$version.jar $output_dir/libexec
 cp clojure-tools/*.edn $output_dir
 cp clojure-tools/clj $output_dir
+cp $script_dir/install.sh $output_dir
 mv clojure $output_dir
    
 # zip
