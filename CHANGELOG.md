@@ -1,4 +1,6 @@
 # Changelog 
+## v0.0.7
+- git deps are now working with classpath jars
 ## v0.0.5
 - Fix for TDEP-120 long classpath on windows
 - added -Scp-jar to generate and use a classpath jar
