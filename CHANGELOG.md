@@ -1,4 +1,6 @@
 # Changelog 
+## v0.0.8
+- complying with 72 bytes line length limit in manifest
 ## v0.0.7
 - git deps are now working with classpath jars
 ## v0.0.5
