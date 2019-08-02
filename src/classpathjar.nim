@@ -4,6 +4,28 @@ import zip/zipfiles
 import strutils
 import times
 import os
+import unicode
+
+const maxByteCount = 72
+# Builds a manifest attribute, limiting line length to 72 bytes
+# UTF-8 aware
+func toAttribute(name : string, value : string) : string =
+    let attrString = name & ": " & value
+    let runes = toRunes(attrString)
+    var i = 0
+    var linePos = 0
+    result = ""
+    while i < len(runes) :
+        let rune = runes[i]
+        let runeSize = size(rune)
+        # leave one byte for a possible \n
+        if linePos+runeSize >= maxByteCount :
+            result &= "\n "
+            linePos=1
+        result &= $(rune)
+        linePos += runeSize
+        i += 1
+    result &= "\n"
 
 proc buildManifest(cpString : string) : string = 
     when defined(windows):
@@ -26,16 +48,12 @@ proc buildManifest(cpString : string) : string =
         else:
             echo "Neither a file or a directory : ", path
             echo "Classpath jars are sensitive to this."
-            quit(1)
-            
+            quit(1)            
         add(newPaths, replace(p, " ", "%20"))
 
-    var cp = join(newPaths, " \n ") & " "
-            
-    result = "Manifest-Version: 1.0\n" &
-        "Class-Path: " & cp & "\n" &
-        "Created-By: Clojure \n" &
-        "\n"
+    var cp = toAttribute("Class-Path", join(newPaths, " "))
+
+    result = "Manifest-Version: 1.0\n" & cp & "Created-By: Clojure \n\n"
 
 proc buildClasspathJar(filename, cpString :string) : void =
     var tempName = changeFileExt(filename, "tmp")
