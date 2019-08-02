@@ -15,13 +15,20 @@ proc buildManifest(cpString : string) : string =
         var p : string
         if existsDir(path) :
             p = path
+            if path[1] == ':':
+                p="\\" & path
             add(p, DirSep)
-        else:
+        elif existsFile(path):
             if (path[1] == ':') :
                 p = "\\" & path
             else:
                 p = path
-        add(newPaths, p)
+        else:
+            echo "Neither a file or a directory : ", path
+            echo "Classpath jars are sensitive to this."
+            quit(1)
+            
+        add(newPaths, replace(p, " ", "%20"))
 
     var cp = join(newPaths, " \n ") & " "
             
