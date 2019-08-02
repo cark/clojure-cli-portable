@@ -25,22 +25,25 @@ output_dir="out/win/clojure-cli"
 
 #prepare zlib
 p Preparing zlib
-wget https://zlib.net/zlib-1.2.11.tar.gz
+wget -nc https://zlib.net/zlib-1.2.11.tar.gz
 tar -xf zlib-1.2.11.tar.gz
 cd zlib-1.2.11/
 # Replace the prefix with our custom one
 sed -i.bak "s/PREFIX =/PREFIX = x86_64-w64-mingw32-/g" win32/Makefile.gcc
 p make
 PREFIXDIR=/usr/x86_64-w64-mingw32 BINARY_PATH=$PREFIXDIR/bin INCLUDE_PATH=$PREFIXDIR/include LIBRARY_PATH=$PREFIXDIR/lib SHARED_MODE=1 make -f win32/Makefile.gcc
+check 'ERROR MAKING ZLIB'
 cd ..
-p compile
-p "$script_dir/../zlib-1.2.11/"
-p $PWD
-nim -d:release --opt:size c -d:mingw -d:project_version="$version" --passL:-s --passL:"-L$script_dir/../zlib-1.2.11/ -lz" --passC:"-I$script_dir/../zlib-1.2.11/" -o:clojure.exe src/clojure
-check 'COMPILE ERROR'
+
 # compile
-# script/compile_win $version
-# check 'COMPILE ERROR'
+p compile
+nim -d:release --opt:size c -d:mingw -d:project_version="$version" --passL:"-L$script_dir/../zlib-1.2.11/ -lz -s -w" --passC:"-I$script_dir/../zlib-1.2.11/" -o:clojure.exe src/clojure
+check 'COMPILE ERROR'
+
+#compress exe
+upx clojure.exe
+check 'UPX ERROR'
+
 # package
 p Packaging...
 mkdir -p $output_dir/libexec

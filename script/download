@@ -29,5 +29,9 @@ p Unpack...
 tar xzf clojure-tools.tar.gz
 check 'UNPACK ERROR'
 
+#nimble install zip
+nimble install zip -y
+check 'NIMBLE ERROR INSTALLING ZIP'
+
 popd > /dev/null
 exit 0

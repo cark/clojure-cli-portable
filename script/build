@@ -21,10 +21,15 @@ version="`cat version.txt | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'`"
 p Linux build
 #clean output dir
 rm -r out/linux
+
 # compile
 output_dir="out/linux/clojure-cli"
 script/compile $version
 check 'COMPILE ERROR'
+
+#compress exe
+upx clojure
+check 'UPX ERROR'
 
 # package
 p Packaging...

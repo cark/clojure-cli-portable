@@ -33,6 +33,9 @@ RUN chmod +x /nsis/nsis-3.04/bin/makensis && \
 	mkdir /nsis/nsis-3.04/share && \
 	ln -s /nsis/nsis-3.04 /nsis/nsis-3.04/share/nsis
 
+# upx
+RUN apt-get install -y upx
+
 # our project
 ADD . /clojure-cli-portable
 WORKDIR /clojure-cli-portable
