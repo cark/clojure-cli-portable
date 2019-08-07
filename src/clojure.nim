@@ -175,7 +175,7 @@ if contains(flags, repro) :
 else :
     config_paths = @[install_dir / "deps.edn", config_dir / "deps.edn", "deps.edn"]
 
-config_str = map(config_paths, quoteShell).join(",")
+config_str = config_paths.join(",") # map(config_paths, quoteShell).join(",")
 
 # Determine whether to use user or project cache
 if existsFile("deps.edn") :
@@ -245,7 +245,10 @@ if stale or contains(flags, pom) :
 # if stale, run make-classpath to refresh cached classpath
 if stale and not contains(flags, describe) :
     if contains(flags, verbose) :
-        echo "Refreshing classpath"   
+      echo "Refreshing classpath"
+      echo @["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
+        "clojure.tools.deps.alpha.script.make-classpath", "--config-files", config_str, "--libs-file", 
+        libs_file, "--cp-file", cp_file, "--jvm-file", jvm_file, "--main-file", main_file] & tool_args
     let exitCode = launch(java_command, @["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
         "clojure.tools.deps.alpha.script.make-classpath", "--config-files", config_str, "--libs-file", 
         libs_file, "--cp-file", cp_file, "--jvm-file", jvm_file, "--main-file", main_file] & tool_args)
