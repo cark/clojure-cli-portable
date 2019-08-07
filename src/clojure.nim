@@ -294,7 +294,7 @@ elif contains(flags, describe) :
     echo " :classpath-aliases " & clj_quoted(join(classpath_aliases, ""))
     echo " :jvm-aliases " & clj_quoted(join(jvm_aliases, ""))
     echo " :main-aliases " & clj_quoted(join(main_aliases, ""))
-    echo " :all-aliases " & clj_quoted(join(classpath_aliases, "")) & "}" 
+    echo " :all-aliases " & clj_quoted(join(all_aliases, "")) & "}" 
 elif contains(flags, tree) :
     fireAndForget(java_command, ["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
         "clojure.tools.deps.alpha.script.print-tree", "--libs-file", libs_file])
