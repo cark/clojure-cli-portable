@@ -1,1 +1,2 @@
-clojure -Scp-jar -A:sock -Sverbose -Sforce -r
+clojure -A:sock -Sverbose -r
+rem clojure -A:sock -Stree

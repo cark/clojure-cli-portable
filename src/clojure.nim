@@ -49,9 +49,15 @@ var
     force_cp = ""
     extra_args = newSeq[string]()
 
-# returns the string surrounded with double quotes
-func quoted(value : string) : string =
-    "\"" & value & "\""
+func clj_quoted(value : string) : string = 
+    result = "\""
+    for c in value :
+        case c:
+            of '"': add(result, "\\\"")
+            of '\\':  add(result, "\\\\")
+            else: add(result, c)
+    add(result, '"')
+
 
 # returns the string at index in the seq
 # returns the empty string when the index is > len(s)
@@ -175,7 +181,7 @@ if contains(flags, repro) :
 else :
     config_paths = @[install_dir / "deps.edn", config_dir / "deps.edn", "deps.edn"]
 
-config_str = config_paths.join(",") # map(config_paths, quoteShell).join(",")
+config_str = config_paths.join(",")
 
 # Determine whether to use user or project cache
 if existsFile("deps.edn") :
@@ -275,20 +281,20 @@ elif contains(flags, describe) :
     var path_vector = newSeq[string]()
     for config_path in config_paths :
         if existsFile(config_path) :
-            add(path_vector, quoted(config_path))
+            add(path_vector, clj_quoted(config_path))
     var path_vector_string = join(path_vector, " ")
-    echo "{:version " & quoted(project_version)
+    echo "{:version " & clj_quoted(project_version)
     echo " :config-files [" & path_vector_string & "]"
-    echo " :install-dir " & quoted(install_dir)
-    echo " :config-dir " & quoted(config_dir)
-    echo " :cache-dir " & quoted(cache_dir)
+    echo " :install-dir " & clj_quoted(install_dir)
+    echo " :config-dir " & clj_quoted(config_dir)
+    echo " :cache-dir " & clj_quoted(cache_dir)
     echo " :force " & $(contains(flags, force))
     echo " :repro " & $(contains(flags, repro))
-    echo " :resolve-aliases " & quoted(join(resolve_aliases, ""))
-    echo " :classpath-aliases " & quoted(join(classpath_aliases, ""))
-    echo " :jvm-aliases " & quoted(join(jvm_aliases, ""))
-    echo " :main-aliases " & quoted(join(main_aliases, ""))
-    echo " :all-aliases " & quoted(join(classpath_aliases, "")) & "}" 
+    echo " :resolve-aliases " & clj_quoted(join(resolve_aliases, ""))
+    echo " :classpath-aliases " & clj_quoted(join(classpath_aliases, ""))
+    echo " :jvm-aliases " & clj_quoted(join(jvm_aliases, ""))
+    echo " :main-aliases " & clj_quoted(join(main_aliases, ""))
+    echo " :all-aliases " & clj_quoted(join(classpath_aliases, "")) & "}" 
 elif contains(flags, tree) :
     fireAndForget(java_command, ["-Xms256m", "-classpath", tools_cp, "clojure.main", "-m", 
         "clojure.tools.deps.alpha.script.print-tree", "--libs-file", libs_file])
