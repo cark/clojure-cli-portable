@@ -23,9 +23,11 @@ p "Installing to $dest_dir"
 mkdir $dest_dir
 cp -rf $script_dir/* $dest_dir
 
-# p "Creating link from $link_from to $dest_dir/clojure"
+p "Creating links from $link_from to $dest_dir/clojure"
 ln -fs $dest_dir/clojure $link_from/clojure
+check 'Failed to create clojure link'
 ln -fs $dest_dir/clj $link_from/clj
+check 'Failed to create clj link'
 
 popd > /dev/null
 exit 0
