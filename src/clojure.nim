@@ -121,7 +121,7 @@ if java_command == "":
 
 # display help
 if contains(flags, help) :
-    echo helpText.text 
+    echo helpText.text & "\nclojure-cli-portable-nim-" & project_version
     quit(0)
 
 # *** We want to be totally transparent, ctrl-c is sent to the 

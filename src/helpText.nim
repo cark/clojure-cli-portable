@@ -44,5 +44,5 @@ Usage: clojure [dep-opt*] [init-opt*] [main-opt] [arg*]
 
     For more info, see:
         https://clojure.org/guides/deps_and_cli
-        https://clojure.org/reference/repl_and_main
+        https://clojure.org/reference/repl_and_main    
 """

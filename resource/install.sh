@@ -17,14 +17,15 @@ script_dir=$(dirname $(readlink -f $0))
 pushd . > /dev/null
 
 dest_dir="/usr/local/clojure"
-link_from="/usr/local/bin/clojure"
+link_from="/usr/local/bin"
 
-p "Installing to $dest-dir"
+p "Installing to $dest_dir"
 mkdir $dest_dir
 cp -rf $script_dir/* $dest_dir
 
-p "Creating link from $link_from to $dest_dir/clojure"
-ln -fT $dest_dir/clojure $link_from
+# p "Creating link from $link_from to $dest_dir/clojure"
+ln -fs $dest_dir/clojure $link_from/clojure
+ln -fs $dest_dir/clj $link_from/clj
 
 popd > /dev/null
 exit 0
