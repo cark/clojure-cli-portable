@@ -1,4 +1,6 @@
 # Changelog 
+## v0.0.10
+- Bumped tdep to 1.10.1.469
 ## v0.0.8
 - complying with 72 bytes line length limit in manifest
 ## v0.0.7
