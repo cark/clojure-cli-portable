@@ -98,7 +98,7 @@ Section "File copy"
     File "clojure-cli\example-deps.edn"
     File "icon\Clojure.ico"
   SetOutPath "$INSTDIR\libexec"
-    File "clojure-cli\libexec\clojure-tools-1.10.1.466.jar"
+    File "clojure-cli\libexec\clojure-tools-${PRODUCT_VERSION}.jar"
   SetOutPath $INSTDIR
     WriteUninstaller "$INSTDIR\uninstall.exe"
 SectionEnd
