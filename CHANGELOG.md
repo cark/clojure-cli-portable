@@ -1,4 +1,6 @@
 # Changelog 
+## v0.0.11
+- Bumped tdep to 1.10.1.472
 ## v0.0.10
 - Bumped tdep to 1.10.1.469
 ## v0.0.8
